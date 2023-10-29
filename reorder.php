@@ -1,11 +1,11 @@
 <?php
 session_start();
-include "headeruser.php"; ?>
+include "headeruser.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@ include "headeruser.php"; ?>
 	<div class="section">
 		<div class="container">
 			<div class="row">
-				<form id="orderForm" action="addorderdetail.php?ids=<?php echo $_GET['ids'] ?>"method="post">
+				<form action="addreorderdetail.php?ids=<?php echo $ids = isset($_GET['ids']) ? $_GET['ids'] : ''?>&order_id=<?php echo $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : ''?>"method="post">
 					<div>
 						<h2 class="title" style="border-radius:6px; margin-left:15px">Thanh toán</h2>
 					</div>
@@ -58,7 +58,7 @@ include "headeruser.php"; ?>
 								<input class="input" type="text" name="full name"
 									placeholder="Full Name"
 									value="<?php echo $value['First_name'] . $value['Last_name'] ?>"
-									readonly>
+									readonly>      
 							</div><h5>Địa chỉ nhận hàng*</h5>
 							<div class="form-group">
 								<input class="input" type="text" name="address"
@@ -67,10 +67,10 @@ include "headeruser.php"; ?>
 							<h5>Số điện thoại*</h5>
 							<div class="form-group">
 								<input class="input" type="tel" name="phone"
-									placeholder="Điện thoại" value="<?php echo $value['phone'] ?>"
-									required>
+									placeholder="Điện thoại" required>
 							</div>
-							<?php endforeach ?>
+                            <?php endforeach ?>
+					
 							<?php endif ?>
 							
 						</div>
@@ -92,50 +92,56 @@ include "headeruser.php"; ?>
 								</div>									
 								<div class="order-summary">
 									<div class="order-products">
-										<?php if (isset($_SESSION['cart'])) :
-										$total_cost = 0;
-										$ids = explode(',', $_GET['ids']);
-										$getAllProducts = $product->getAllProducts();
-										foreach ($getAllProducts as $value) :
-											if (in_array($value['id'], $ids)) : ?>
-										<div class="order-col">
-										<h5><img width="145" height="145" alt="poster_1_up"
-												class="shop_thumbnail"
-												src="img/<?php echo $value['pro_image']; ?>"> x <?php echo $_SESSION['cart'][$value['id']]?></h5>
-											<div style="width:60%">
-												<strong>
-													<?php echo $value['name'] ?><div></div> <?php echo number_format($value['discount_price'],0,',','.')?> đ
-												</strong>
-											</div>
-										</div>
-										<div class="order-col">
-											<div>
-												<strong>Tạm tính:</strong>
-											</div>
-											<div>
-												<strong class="order-cash-total">
-													<?php echo number_format($_SESSION['cart'][$value['id']] * $value['discount_price'],0,',','.') ?> đ
-												</strong>
-											</div>
-										</div>
-										<?php $total_cost += ($_SESSION['cart'][$value['id']] * $value['discount_price']) ?>
-										<?php $_SESSION['total_cost'] = $total_cost; ?>
-										<hr style="border-color: #ccc">
-										<?php	
-											endif;
-												endforeach;	
-											endif
-											?>
-										<div class="order-col">
-											<div>
-												<strong>Tiền hàng:</strong>
-											</div>
-											<div>
-												<strong class="order-cash-total">
-													<?php echo number_format($total_cost,0,',','.') ?> đ
-												</strong>
-											</div>
-										</div>
+                                    <?php
+                                        $ids = isset($_GET['ids']) ? $_GET['ids'] : '';
+                                        $idArray = explode(',', $ids);
+                                        $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : '';  
+                                        $orderDetails = $orderdetail->getAllOrderDetailsByOrderId($order_id);
+                                        $total = 0;
+                                        foreach ($orderDetails as $orderDetail) {
+                                            foreach ($idArray as $id){
+                                                if($id == $orderDetail['product_id']){
+                                                    $cash = $orderDetail['discount_price']*$orderDetail['product_quantity'];
+                                                    $total += $cash;
+													$_SESSION['total_cost'] = $total;
+                                        ?>
+                                                <div class="order-col">
+                                                    <h5><img width="145" height="145" alt="poster_1_up"
+                                                            class="shop_thumbnail"
+                                                            src="img/<?php echo $orderDetail['product_image']; ?>"> x <?php echo $orderDetail['product_quantity']; ?> </h5>
+                                                    <div style="width:60%">
+                                                        <strong>
+                                                            <?php echo $orderDetail['product_name']; ?><div></div> <?php echo number_format($orderDetail['discount_price'], 0, ',', '.'); ?> đ
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                                <div class="order-col">
+                                                    <div>
+                                                        <strong>Tạm tính:</strong>
+                                                    </div>
+                                                    <div>
+                                                        <strong class="order-cash-total">
+                                                            <?php echo number_format($cash, 0, ',', '.'); ?> đ
+                                                        </strong>
+                                                    </div>
+                                                </div>
+												<hr style="border-color: #ccc">
+                                        <?php
+                                            }
+                                        }
+                                        }
+                                        ?>
+                                        
+                                        <div class="order-col">
+                                            <div>
+                                                <strong>Tiền hàng:</strong>
+                                            </div>
+                                            <div>
+                                                <strong class="order-cash-total">
+                                                    <?php echo number_format($total, 0, ',', '.'); ?> đ
+                                                </strong>
+                                            </div>
+                                        </div>	
 										<div class="order-col">
 										<div>
 												<strong>Phí ship:</strong>
@@ -152,7 +158,7 @@ include "headeruser.php"; ?>
 											</div>
 											<div>
 												<h4>
-													<?php echo number_format($total_cost,0,',','.') ?> đ
+													<?php echo number_format($total,0,',','.') ?> đ
 											</h4>
 											</div>
 										</div>
@@ -163,7 +169,7 @@ include "headeruser.php"; ?>
 												<img style="height:32px; width:84px; border:1px solid #ccc; padding:5px; border-radius:3px;" src="./img/vnpay.webp">
 											</div>
 										</div>
-
+										
 										<div>
 											<div>
 												<input type="radio" id="thanh-toan-khi-nhan-hang" name="payment_method" value="1">

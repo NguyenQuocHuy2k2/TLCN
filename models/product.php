@@ -124,8 +124,6 @@ class Product extends Db
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
         return $items; //return an array
     }
-
-
     
     public function paginate($url, $total, $perPage, $page)
     {

@@ -96,17 +96,24 @@
                                             
                                         <?php endforeach ?>
                                         <tr>
-                                                        <td class="actions" colspan="6">
-                                                            <div class="add-to-cart">
-                                                                <button class="add-to-cart-btn">
-                                                                    <a style="text-decoration: none;" href="./check.php?ids=<?php echo implode(',', array_keys($_SESSION['cart'])); ?>">
+                                            <td class="actions" colspan="6">
+                                                <div class="add-to-cart">
+                                                    <?php
+                                                        if (!empty($_SESSION['cart'])) {
+                                                            echo '<button class="add-to-cart-btn">
+                                                                    <a style="text-decoration: none;" href="./check.php?ids=' . implode(',', array_keys($_SESSION['cart'])) . '">
                                                                         <i class="fa fa-credit-card"></i> Thanh toán
                                                                     </a>
-                                                                </button>
-                                                            </div>
-                                                        </td>
+                                                                </button>';
+                                                        } else {
+                                                            echo '<strong>Giỏ hàng của bạn hiện đang trống</strong>';
+                                                        }
+                                                    ?>
 
-                                                            </tr>
+                                                </div>
+                                            </td>
+
+                                        </tr>
                                     <?php endif ?>
 
                                 </table>

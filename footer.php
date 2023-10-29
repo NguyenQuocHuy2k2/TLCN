@@ -45,7 +45,7 @@
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
                         <h3 class="footer-title">Chúng tôi</h3>
-                        <p><strong>Đồ án CNPM HĐT xây dựng website bán đồ ăn trực tuyến</strong></p>
+                        <p><strong>Tiểu luận chuyên ngành xây dựng website bán đồ ăn trực tuyến</strong></p>
                         <ul class="footer-links">
                             <li><i class="fa fa-map-marker"></i>01 Võ Văn Ngân - Phường Linh Chiểu- Thành phố Thủ Đức</li>
                             <li><i class="fa fa-phone"></i>0935.540.795</li>
@@ -72,7 +72,6 @@
                         <h3 class="footer-title">thông tin</h3>
                         <ul class="footer-links">
                             <li><strong>Hồ Duy Hoàng</strong> - <strong> 20110487 </strong>20110487@student.hcmute.edu.vn</li>
-                            <li><strong>Nguyễn Quốc Huy</strong> - <strong> 20110089 </strong>20110487@student.hcmute.edu.vn</li>
                             <li><strong>Đàm Vinh Quang</strong> - <strong> 20110548 </strong>20110548@student.hcmute.edu.vn</li>
                         </ul>
                     </div>

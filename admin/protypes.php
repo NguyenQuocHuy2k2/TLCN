@@ -58,11 +58,10 @@ if(isset($_GET['status'])){
               <th style="width: 43%">
                 Type_ID
               </th>
-              <th style="width: 43%">
+              <th style="width: 30%">
                 Type_Name
               </th>            
-              <th style="width: 14%">
-                Action
+              <th style="width: 20%">
               </th>
             </tr>
           </thead>
@@ -78,7 +77,7 @@ if(isset($_GET['status'])){
                   <a class="btn btn-info btn-sm" href="editProtype.php?type_id=<?php echo $value['type_id'];?>">
                     <i class="fas fa-pencil-alt">
                     </i>
-                    Edit
+                    Update
                   </a>
                   <a class="btn btn-danger btn-sm" href="deletePT.php?type_id=<?php echo $value['type_id'];?>">
                     <i class="fas fa-trash">

@@ -136,14 +136,14 @@
           <!-- small box -->
           <div class="small-box bg-orange">
             <div class="inner">
-              <h3><?php echo count($order->getAllOrdersHasDelivered()) ?></h3>
+              <h3><?php echo count($payment->getAllPayments()) ?></h3>
 
-              <p>Order has been delivered</p>
+              <p>Payments</p>
             </div>
             <div class="icon">
-              <i class="ion ion-checkmark-round"></i>
+              <i class="ion ion-card"></i>
             </div>
-            <a href="orders.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="payments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
 

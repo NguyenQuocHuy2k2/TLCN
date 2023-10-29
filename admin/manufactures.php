@@ -59,11 +59,11 @@ if(isset($_GET['status'])){
               <th style="width: 43%">
                 Manu_ID
               </th>
-              <th style="width: 43%">
+              <th style="width: 30%">
                 Manu_Name
               </th>
-              <th style="width: 14%">
-                Action
+              <th style="width: 20%">
+              
               </th>
             </tr>
           </thead>
@@ -80,7 +80,7 @@ if(isset($_GET['status'])){
                   <a class="btn btn-info btn-sm" href="editManufacture?manu_id=<?php echo $value['manu_id']; ?>">
                     <i class="fas fa-pencil-alt">
                     </i>
-                    Edit
+                    Update
                   </a>
                   <a class="btn btn-danger btn-sm" href="deleteMF.php?manu_id=<?php echo $value['manu_id']; ?>">
                     <i class="fas fa-trash">

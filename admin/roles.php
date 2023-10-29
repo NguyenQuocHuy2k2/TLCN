@@ -62,14 +62,13 @@ if (isset($_GET['status'])) {
           <thead>
             <tr>
 
-              <th style="width: 43%">
+              <th style="width: 40%">
                 Role ID
               </th>
-              <th style="width: 43%">
+              <th style="width: 40%">
                 Role Name
               </th>
-              <th style="width: 14%">
-                Action
+              <th style="width: 20%">    
               </th>
             </tr>
           </thead>
@@ -86,7 +85,7 @@ if (isset($_GET['status'])) {
                   <a class="btn btn-info btn-sm" href="editRole.php?role_id=<?php echo $value['role_id']; ?>">
                     <i class="fas fa-pencil-alt">
                     </i>
-                    Edit
+                    Update
                   </a>
                   <a class="btn btn-danger btn-sm" href="deleteR.php?role_id=<?php echo $value['role_id']; ?>">
                     <i class="fas fa-trash">

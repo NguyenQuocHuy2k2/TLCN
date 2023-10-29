@@ -23,6 +23,8 @@ require "models/user.php";
 require "models/role.php";
 require "models/order.php";
 require "models/orderdetail.php";
+require "models/status.php";
+require "models/payment.php";
 $product = new Product;
 $manufacture = new Manufacture;
 $protype = new Protype;
@@ -31,6 +33,8 @@ $user = new User;
 $role = new Role;
 $order = new Order;
 $orderdetail = new OrderDetail;
+$status = new Status;
+$payment = new Payment;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -255,7 +259,7 @@ $orderdetail = new OrderDetail;
                             <a href="products.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/products.php' || $_SERVER['PHP_SELF'] == '../admin/addProduct.php') {
                                                                         echo 'active';
                                                                     } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-cube"></i>
                                 <p>
                                     Products
                                     <span class="right badge badge-danger">New</span>
@@ -266,7 +270,7 @@ $orderdetail = new OrderDetail;
                             <a href="manufactures.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/manufactures.php' || $_SERVER['PHP_SELF'] == '../admin/addManufacture.php') {
                                                                             echo 'active';
                                                                         } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-industry"></i>
                                 <p>
                                     Manufactures
                                     <span class="right badge badge-danger">New</span>
@@ -277,7 +281,7 @@ $orderdetail = new OrderDetail;
                             <a href="protypes.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/protypes.php' || $_SERVER['PHP_SELF'] == '../admin/addProtype.php') {
                                                                         echo 'active';
                                                                     } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-cubes"></i>
                                 <p>
                                     Protypes
                                     <span class="right badge badge-danger">New</span>
@@ -288,7 +292,7 @@ $orderdetail = new OrderDetail;
                             <a href="sales.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/sales.php' || $_SERVER['PHP_SELF'] == '../admin/addSale.php') {
                                                                     echo 'active';
                                                                 } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-tags"></i>
                                 <p>
                                     Sales
                                     <span class="right badge badge-danger">New</span>
@@ -299,7 +303,7 @@ $orderdetail = new OrderDetail;
                             <a href="users.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/users.php' || $_SERVER['PHP_SELF'] == '../admin/addUser.php') {
                                                                     echo 'active';
                                                                 } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     User
                                     <span class="right badge badge-danger">New</span>
@@ -310,7 +314,7 @@ $orderdetail = new OrderDetail;
                             <a href="roles.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/roles.php' || $_SERVER['PHP_SELF'] == '../admin/addRole.php') {
                                                                     echo 'active';
                                                                 } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-lock"></i>
                                 <p>
                                     Roles
                                     <span class="right badge badge-danger">New</span>
@@ -321,17 +325,27 @@ $orderdetail = new OrderDetail;
                             <a href="orders.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/orders.php' || $_SERVER['PHP_SELF'] == '../admin/addOrder.php') {
                                                                     echo 'active';
                                                                 } ?>">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-shopping-cart"></i>
                                 <p>
                                     Orders
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="payments.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/payments.php') {
+                                                                    echo 'active';
+                                                                } ?>">
+                                <i class="nav-icon fas fa-money-bill"></i>
+                                <p>
+                                    Payments
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>                                           
                         <li class="nav-item">
                             <a href="logout.php" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Log Out
                                     <span class="right badge badge-danger "><span class="ion-log-out"></span></span>

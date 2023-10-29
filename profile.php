@@ -132,14 +132,16 @@ if (isset($_GET['status'])) {
                 <ul class="header-links pull-right">
                    <!--  <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li> -->
                     <?php $getLastname = $user->getLastname($_SESSION['user']); ?>
-                    <li><a href="profile.php"><i class="<?php if ($_SESSION['permision'] == 1) {
-                                                            echo "fa fa-user-secret";
-                                                        } else {
-                                                            echo "fa fa-user";
-                                                        } ?>"></i> Xin chào <?php foreach ($getLastname as $value) {
-                                                                                echo $value['Last_name'];
-                                                                            } ?></a></li>
-
+                    <li><a href="profile.php">
+                        <i class="<?php if ($_SESSION['permision'] == 1) 
+                        {
+                            echo "fa fa-user-secret";
+                        } else {
+                            echo "fa fa-user";
+                        } ?>"></i> Xin chào <?php foreach ($getLastname as $value) 
+                        {
+                            echo $value['Last_name'];
+                        } ?></a></li>
                     <li><a href="admin/logoutuser.php"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
 
                 </ul>
@@ -338,7 +340,8 @@ if (isset($_GET['status'])) {
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a style="background-color: #80bb35;"  class="btn btn-info " href="editprofile.php?user_id=<?php echo $value['user_id']; ?>">Sửa</a>
+                                        <a style="background-color: #f75e00;"  class="btn btn-reorder" href="editprofile.php?user_id=<?php echo $value['user_id']?>"><strong>Sửa</strong> <i class = "fa fa-pencil"></i></a>
+                                        <a style="background-color: #80bb35;"  class="btn btn-reorder" href="orders.php"><strong>Xem đơn hàng</strong> <i class = "fa fa-arrow-circle-right"></i></a>
                                     </div>
                                 </div>
                             </div>

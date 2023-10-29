@@ -95,7 +95,7 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
               <th style="width: 8%">
                 Created_at
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 10%" class="text-center">
                 Action
               </th>
             </tr>
@@ -103,7 +103,20 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
           <tbody>
             <?php
             $getAllProductsDESC = $product->getAllProductsDESC();
-            foreach ($getAllProductsDESC as $value) :
+
+            foreach($getAllProductsDESC as $productInfo){
+                $pro_id = $productInfo['id'];
+            }
+            
+            $perPage = 10;
+            // Lấy số trang trên thanh địa chỉ
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            // Tính tổng số dòng, ví dụ kết quả là 18
+            $total = count($getAllProductsDESC);
+            // lấy đường dẫn đến file hiện hành
+            $url = $_SERVER['PHP_SELF'] . "?id=" . $pro_id;                        
+            $get10ProductsDESCs = $product->get10ProductsDESC($page,$perPage);
+            foreach ($get10ProductsDESCs as $value) :
             ?>
               <tr>
                 <td><?php echo $value['id'] ?></td>
@@ -139,7 +152,7 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
                   <a class="btn btn-info btn-sm" style="margin-bottom: 10px;" href="editPropduct.php?id=<?php echo $value['id']; ?>">
                     <i class="fas fa-pencil-alt">
                     </i>
-                    Edit
+                    Update
                   </a>
                   <a class="btn btn-danger btn-sm" href="deletePD.php?id=<?php echo $value['id']; ?>">
                     <i class="fas fa-trash">
@@ -154,8 +167,11 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
       </div>
       <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-
+    <div class="store-filter clearfix">
+            <ul class="store-pagination" style="text-align: center; list-style: none; padding: 0; display: flex; flex-direction: row; justify-content: center;">
+                <?php echo $order->paginate($url, $total, $perPage, $page); ?>
+            </ul>
+    </div>
   </section>
   <!-- /.content -->
 </div>

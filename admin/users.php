@@ -76,7 +76,7 @@ if (isset($_GET['status'])) {
               <th style="width: 14%">
                 Last name
               </th>
-              <th style="width: 14%">
+              <th style="width: 10%">
                 Phone
               </th>
               <th style="width: 12%">
@@ -85,11 +85,10 @@ if (isset($_GET['status'])) {
               <th style="width: 13%">
                 Password
               </th>
-              <th style="width: 5%">
+              <th style="width: 3%">
                 Role_ID
               </th>
-              <th style="width: 15%">
-                Action
+              <th style="width: 20%">
               </th>
             </tr>
           </thead>
@@ -112,7 +111,7 @@ if (isset($_GET['status'])) {
                   <a class="btn btn-info btn-sm" href="editUser.php?user_id=<?php echo $value['user_id']; ?>">
                     <i class="fas fa-pencil-alt">
                     </i>
-                    Edit
+                    Update
                   </a>
                   <a class="btn btn-danger btn-sm" href="deleteU.php?user_id=<?php echo $value['user_id']; ?>">
                     <i class="fas fa-trash">

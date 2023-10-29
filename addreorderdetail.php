@@ -23,14 +23,22 @@ if (isset($_POST['submit'])) {
         $user_id = $value['user_id'];
     }
     $ids = $_GET['ids'];
-    $ids_array = explode(',', $ids); 
-    $total_cost = 0; 
+    $ids_array = explode(',', $ids);
+    $order_ids = $_GET['order_id'];
+    $total_cost = 0;
+    $getOrderDetailById = $orderdetail->getAllOrderDetailsByOrderId($order_ids);
     foreach ($ids_array as $id) :
         $getProductById = $product->getProductById($id);
         foreach ($getProductById as $value) :
             $price = $value['discount_price'];
         endforeach;
-        $quantity = $_SESSION['cart'][$id]; 
+        foreach ($getProductById as $value) :
+            $price = $value['discount_price'];
+        endforeach;
+        
+        foreach ($getOrderDetailById as $orderdetails):
+            $quantity = $orderdetails['product_quantity'];
+        endforeach;    
         $total = $price * $quantity;
         $total_cost += $total;
     endforeach;
@@ -43,14 +51,13 @@ if (isset($_POST['submit'])) {
             $type_id = $value['type_id'];
             $pro_image = $value['pro_image'];
         endforeach;
-        $quantity = $_SESSION['cart'][$id]; 
+        foreach ($getOrderDetailById as $orderdetails):
+            $quantity = $orderdetails['product_quantity'];
+        endforeach;
         $pro_id = $id;
         $total = $price * $quantity;
         $orderdetail->addorderdetail($order_id,$pro_name, $price, $quantity, $total, $pro_id, $type_id, $pro_image);      
     endforeach;
-    foreach ($ids_array as $id) {
-        unset($_SESSION['cart'][$id]);
-    }
     if($checkout == 1){
         header('location:./orders.php?status=s');
     } else if($checkout == 0){
@@ -59,6 +66,5 @@ if (isset($_POST['submit'])) {
         $order->UpdatedStatusByOrderID($order_idmax, $status);
         header('location:./onlinepayment.php?checkout=' . $checkout);
     }
-    
 }
 
