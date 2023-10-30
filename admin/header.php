@@ -25,6 +25,8 @@ require "models/order.php";
 require "models/orderdetail.php";
 require "models/status.php";
 require "models/payment.php";
+require "../models/coupon.php";
+$coupon = new Coupon;
 $product = new Product;
 $manufacture = new Manufacture;
 $protype = new Protype;

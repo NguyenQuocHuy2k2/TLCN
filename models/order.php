@@ -2,10 +2,10 @@
 class Order extends Db
 {
 
-    public function addOrder($user_id, $address, $phone, $total, $note, $checkout)
+    public function addOrder($user_id, $address, $phone, $coupon_discount, $total, $note, $checkout)
     {
-        $sql = self::$connection->prepare("INSERT INTO `orders`(`user_id`, `address`, `phone`, `total`, `note`, `checkout`) VALUES (?,?,?,?,?,?)");
-        $sql->bind_param("issisi", $user_id, $address, $phone, $total, $note, $checkout);
+        $sql = self::$connection->prepare("INSERT INTO `orders`(`user_id`, `address`, `phone`, `coupon_discount`, `total`, `note`, `checkout`) VALUES (?,?,?,?,?,?,?)");
+        $sql->bind_param("issiisi", $user_id, $address, $phone, $coupon_discount, $total, $note, $checkout);
         $sql->execute();
         $order_id = self::$connection->insert_id;
         return $order_id;

@@ -6,7 +6,6 @@ if (isset($_SESSION['user'])) {
 } else {
     include "header.php";
 }
-
 if (isset($_GET['status'])) {
     if ($_GET['status'] == 'sd') {
         echo "<script> alert('Hủy đơn hàng thành công'); </script>";
@@ -91,10 +90,18 @@ ob_end_flush();
                                                             <?php $totalPrice = $orderDetail['discount_price'] * $orderDetail['product_quantity']; ?>
                                                             <h5><p>Số lượng: x<?php echo $orderDetail['product_quantity']; ?></p></h5>
                                                             <h5><p>Tổng: <?php echo number_format($totalPrice, 0, ',', '.'); ?>đ</h5>
+                                                            
                                                             <hr style="border-top:1px solid gray;">
                                                         </div>
                                                     </div>
                                                 <?php endforeach; ?>
+                                                <h5><p>Giảm giá: <?php 
+                                                            if($orderInfo['coupon_discount'] >100){
+                                                                echo number_format(-$orderInfo['coupon_discount'], 0, ',', '.'); 
+                                                            }else{
+                                                                echo number_format(-($orderInfo['coupon_discount']*($orderInfo['total']/(1-($orderInfo['coupon_discount']/100))))/100, 0, ',', '.');
+                                                            }
+                                                ?>đ</h5>
                                             </td>
                                             <td class="product-cost"><strong><?php echo number_format($orderInfo['total'], 0, ',', '.'); ?>đ</td></strong>
                                             <td class="product-address"><strong><?php echo $orderInfo['address']; ?></td></strong>

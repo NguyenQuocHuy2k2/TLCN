@@ -1,4 +1,5 @@
 <?php include "header.php";
+
 if (isset($_GET['status'])) {
     if ($_GET['status'] == 'ac') {
         echo "<script> alert('Thêm thành công'); </script>";
@@ -105,7 +106,13 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
                                 <td class="text-center" style="width: 5%"><?php echo $value['user_id'] ?></td>
                                 <td class="text-center" style="width: 20%"><?php echo $value['address'] ?></td>
                                 <td style="width: 10%"><?php echo $value['phone']?></td>
-                                <td style="width: 5%"><?php echo number_format($value['total'],0,',','.')?>đ</td>
+                                <td style="width: 9%">Mã giảm giá: 
+                                    <?php 
+                                    if($value['coupon_discount'] > 100){
+                                        echo number_format(-$value['coupon_discount'],0,',','.'); }
+                                    else {
+                                        echo number_format(-(($value['coupon_discount']*($value['total']/(1-($value['coupon_discount']/100))))/100),0,',','.');
+                                    } ?>đ <div></div>Tổng tiền: <?php echo number_format($value['total'],0,',','.')?>đ </td>
                                 <td style="width: 10%"><?php echo $value['note'] ?></td>
                                 <td style="width: 10%"><?php if($value['checkout'] == 0) { echo 'Chuyển khoản ngân hàng';} else { echo 'Thanh toán khi nhận hàng';} ?></td>
                                 <td class="text-center" style="width: 10%">

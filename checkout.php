@@ -1,6 +1,27 @@
 <?php
 session_start();
-include "headeruser.php"; ?>
+
+if(isset($_SESSION['couponCode'])){
+	$couponCode = $_SESSION['couponCode'];
+	
+}else{
+	$couponCode = '';
+}
+
+var_dump($couponCode);
+include "headeruser.php"; 
+$coupons = $coupon->getCouponAmountByName($couponCode);
+foreach($coupons as $couponValues){
+	if($couponCode === $couponValues['coupon_code']){
+		$coupon_name = $couponValues['coupon_code'];
+		$coupon_amount = $couponValues['coupon_amount'];
+		$coupon_type = $couponValues['coupon_type'];
+	}
+}
+var_dump($coupon_name);
+var_dump($coupon_amount);
+unset($_SESSION['couponCode']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -155,11 +176,13 @@ include "headeruser.php"; ?>
 												<strong>Nhập mã giảm giá:</strong>
 											</div>
 											<div style="width:30%">
-											<input style="border: 2px dashed #000; border-radius: 4px; padding: 9px;" type="text" id="coupon-code" name="coupon-code" placeholder="Nhập mã giảm giá">
-												</div>
-												<div style="width:20%"><button type="button" id="applyCouponButton" style="background-color: #FE9705; color: #fff; border: none; border-radius: 4px; padding: 9px; cursor: pointer;"><strong>Áp dụng</strong></button></div>
+											<input style="border: 2px dashed #000; border-radius: 4px; padding: 9px;" type="text" id="coupon-codes" name="coupon-codes" placeholder="Nhập mã giảm giá">
+											</div>
+											<div style="width:20%"><button type="button" id="applyCouponButton" style="background-color: #FE9705; color: #fff; border: none; border-radius: 4px; padding: 9px; cursor: pointer;"><strong>Áp dụng</strong></button></div>
 
 										</div>
+										
+
 										<div id="coupon-result" style="color: red;"></div>
 											<?php
 												$coupon_data = array();
@@ -189,19 +212,30 @@ include "headeruser.php"; ?>
 												});
 
 												function applyCoupon() {
-													var couponCode = document.getElementById("coupon-code").value;
-													var couponCode = "IAMGIA150K";
+													var couponCode = document.getElementById("coupon-codes").value;
+													for (var i = 0; i < couponData.length; i++) {
+														if (couponCode == couponData[i].coupon_code && couponData[i].coupon_remain > 0
+															&& couponData[i].temp_cost >= couponData[i].min_order) {
+															
 													$.ajax({
 														type: 'POST',
-														url: 'process.php', // Đường dẫn tới tệp PHP xử lý
-														data: { couponCode: couponCode }, // Gửi giá trị couponCode đến PHP
+														url: 'process.php',
+														data: { couponCode: couponCode },
 														success: function (response) {
-															// Xử lý kết quả từ PHP (nếu cần)
-														}
+															if (response === 'success') {
+																var couponResult = document.getElementById("coupon-result");
+																
+																couponResult.innerHTML = 'Mã giảm giá "' + couponCode + '" đã được áp dụng thành công';
+																couponResult.style.color = 'green';
+																location.reload();
+															}
+														},
+														
 													});
-													
+												}
+											}
 													var couponResult = document.getElementById("coupon-result");
-
+													
 													// Truy cập giá trị từ mảng JSON
 													for (var i = 0; i < couponData.length; i++) {
 														if (couponCode == couponData[i].coupon_code) {
@@ -224,57 +258,45 @@ include "headeruser.php"; ?>
 															couponResult.innerHTML = 'Mã giảm giá này không hợp lệ';
 															couponResult.style.color = 'red';
 														}
-
-
 													}
 												}
 												</script>
-												
-										<div class="order-col" style="margin-top:12px">
-										<?php
-											$couponAmount = 0;
-											
-												$couponCode = "GIAMGIA100K";					
-												$coupons = $coupon->getAllCoupon();
-												foreach($coupons as $couponValues){
-													if($couponCode == $couponValues['coupon_code'] && $couponValues['coupon_remain']>0
-														&& $couponValues['min_order'] <= $temp_cost){
-														$couponAmount = $couponValues['coupon_amount'];
-													}
-												}			
-										?>
-										<?php $total_cost = $temp_cost - $couponAmount; $_SESSION['total_cost'] = $total_cost; ?>
+
 										<div>
-												<strong>Mã giảm giá test:</strong>
-											</div>
+										<?php
+													if($couponCode == $coupon_name){
+														$couponAmount = $coupon_amount;
+													}
+													else{
+														$couponAmount = 0;
+													}
+										?>
+										<div class="order-col">
 											<div>
-												<h5 id="coupon-amount">
-												<?php echo number_format(-$couponAmount,0,',','.') ?> đ
-											</h5>
-											</div>
-										</div>
-										<div>
-										<?php
-											$couponAmount = 0;
-											if (isset($_SESSION['couponCode'])) {
-												$couponCode = $_SESSION['couponCode'];					
-												$coupons = $coupon->getAllCoupon();
-												foreach($coupons as $couponValues){
-													if($couponCode == $couponValues['coupon_code']){
-														$couponAmount = $couponValues['coupon_amount'];
-													}
-												}
-											}
-										?>
-										<div>
 												<strong>Mã giảm giá:</strong>
 											</div>
 											<div>
-												<h5 id="coupon-amount">
-												<?php echo number_format(-$couponAmount,0,',','.') ?> đ
+											<?php 
+												$_SESSION['couponAmount'] = $couponAmount;
+												?>
+											<h5 id="coupon-amount">
+												<?php 
+													if($coupon_type == 0){
+														$total_cost = $temp_cost - $couponAmount;
+														echo number_format(-$couponAmount,0,',','.');
+													}
+													
+													else{
+														$total_cost = $temp_cost * ((100 - $couponAmount)/100);
+														echo number_format(-($temp_cost*$coupon_amount/100),0,',','.');
+													}?> đ
+												<?php $_SESSION['total_cost'] = $total_cost;?>	
 											</h5>
 											</div>
-										</div>
+										</div>	
+										
+										
+												
 										<div>		
 										<div class="order-col" style="margin-top:12px">
 										<div>
