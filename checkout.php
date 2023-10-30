@@ -34,6 +34,9 @@ include "headeruser.php"; ?>
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 </head>
 
 <body>
@@ -94,6 +97,7 @@ include "headeruser.php"; ?>
 									<div class="order-products">
 										<?php if (isset($_SESSION['cart'])) :
 										$total_cost = 0;
+										$temp_cost = 0;
 										$ids = explode(',', $_GET['ids']);
 										$getAllProducts = $product->getAllProducts();
 										foreach ($getAllProducts as $value) :
@@ -118,8 +122,8 @@ include "headeruser.php"; ?>
 												</strong>
 											</div>
 										</div>
-										<?php $total_cost += ($_SESSION['cart'][$value['id']] * $value['discount_price']) ?>
-										<?php $_SESSION['total_cost'] = $total_cost; ?>
+										<?php $temp_cost += ($_SESSION['cart'][$value['id']] * $value['discount_price']) ?>
+										
 										<hr style="border-color: #ccc">
 										<?php	
 											endif;
@@ -132,7 +136,7 @@ include "headeruser.php"; ?>
 											</div>
 											<div>
 												<strong class="order-cash-total">
-													<?php echo number_format($total_cost,0,',','.') ?> đ
+													<?php echo number_format($temp_cost,0,',','.') ?> đ
 												</strong>
 											</div>
 										</div>
@@ -147,6 +151,132 @@ include "headeruser.php"; ?>
 											</div>
 										</div>
 										<div class="order-col">
+											<div style="width:50%">
+												<strong>Nhập mã giảm giá:</strong>
+											</div>
+											<div style="width:30%">
+											<input style="border: 2px dashed #000; border-radius: 4px; padding: 9px;" type="text" id="coupon-code" name="coupon-code" placeholder="Nhập mã giảm giá">
+												</div>
+												<div style="width:20%"><button type="button" id="applyCouponButton" style="background-color: #FE9705; color: #fff; border: none; border-radius: 4px; padding: 9px; cursor: pointer;"><strong>Áp dụng</strong></button></div>
+
+										</div>
+										<div id="coupon-result" style="color: red;"></div>
+											<?php
+												$coupon_data = array();
+												$coupons = $coupon->getAllCoupon();
+												foreach ($coupons as $couponValues) {
+														$coupon_data[] = array(
+															'coupon_code' => $couponValues['coupon_code'],	
+															'coupon_remain' => $couponValues['coupon_remain'],
+															'min_order' => $couponValues['min_order'],
+															'temp_cost' => $temp_cost
+														);			
+												}
+
+												echo '<script>';
+												echo 'var couponData = ' . json_encode($coupon_data) . ';';
+												echo '</script>';
+											?>
+												<script>
+													var shouldPreventFormSubmit = true;
+													document.getElementById("applyCouponButton").addEventListener("click", function(event) {
+													event.preventDefault();										
+													applyCoupon();
+													if (shouldPreventFormSubmit) {
+														event.preventDefault();
+													}
+
+												});
+
+												function applyCoupon() {
+													var couponCode = document.getElementById("coupon-code").value;
+													var couponCode = "IAMGIA150K";
+													$.ajax({
+														type: 'POST',
+														url: 'process.php', // Đường dẫn tới tệp PHP xử lý
+														data: { couponCode: couponCode }, // Gửi giá trị couponCode đến PHP
+														success: function (response) {
+															// Xử lý kết quả từ PHP (nếu cần)
+														}
+													});
+													
+													var couponResult = document.getElementById("coupon-result");
+
+													// Truy cập giá trị từ mảng JSON
+													for (var i = 0; i < couponData.length; i++) {
+														if (couponCode == couponData[i].coupon_code) {
+															if (couponData[i].temp_cost >= couponData[i].min_order) {
+																if (couponData[i].coupon_remain > 0) {											
+																	couponResult.innerHTML = 'Mã giảm giá "' + couponCode + '" đã được áp dụng thành công';
+																	couponResult.style.color = 'green';
+																	break;
+																} else {
+																	
+																	couponResult.innerHTML = 'Số lượng mã giảm giá này đã hết';
+																	couponResult.style.color = 'red';
+																}
+															} else {
+																
+																couponResult.innerHTML = 'Giá trị đơn hàng không thỏa điều kiện';
+																couponResult.style.color = 'red';
+															}
+														} else if (couponCode != couponData[i].coupon_code){
+															couponResult.innerHTML = 'Mã giảm giá này không hợp lệ';
+															couponResult.style.color = 'red';
+														}
+
+
+													}
+												}
+												</script>
+												
+										<div class="order-col" style="margin-top:12px">
+										<?php
+											$couponAmount = 0;
+											
+												$couponCode = "GIAMGIA100K";					
+												$coupons = $coupon->getAllCoupon();
+												foreach($coupons as $couponValues){
+													if($couponCode == $couponValues['coupon_code'] && $couponValues['coupon_remain']>0
+														&& $couponValues['min_order'] <= $temp_cost){
+														$couponAmount = $couponValues['coupon_amount'];
+													}
+												}			
+										?>
+										<?php $total_cost = $temp_cost - $couponAmount; $_SESSION['total_cost'] = $total_cost; ?>
+										<div>
+												<strong>Mã giảm giá test:</strong>
+											</div>
+											<div>
+												<h5 id="coupon-amount">
+												<?php echo number_format(-$couponAmount,0,',','.') ?> đ
+											</h5>
+											</div>
+										</div>
+										<div>
+										<?php
+											$couponAmount = 0;
+											if (isset($_SESSION['couponCode'])) {
+												$couponCode = $_SESSION['couponCode'];					
+												$coupons = $coupon->getAllCoupon();
+												foreach($coupons as $couponValues){
+													if($couponCode == $couponValues['coupon_code']){
+														$couponAmount = $couponValues['coupon_amount'];
+													}
+												}
+											}
+										?>
+										<div>
+												<strong>Mã giảm giá:</strong>
+											</div>
+											<div>
+												<h5 id="coupon-amount">
+												<?php echo number_format(-$couponAmount,0,',','.') ?> đ
+											</h5>
+											</div>
+										</div>
+										<div>		
+										<div class="order-col" style="margin-top:12px">
 										<div>
 												<strong>Tổng tiền:</strong>
 											</div>

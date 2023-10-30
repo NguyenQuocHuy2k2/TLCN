@@ -11,6 +11,8 @@ require "models/order.php";
 require "models/orderdetail.php";
 require "admin/models/status.php";
 require "models/payment.php";
+require "models/coupon.php";
+$coupon = new Coupon;
 $product = new Product;
 $protype = new Protype;
 $user = new User;

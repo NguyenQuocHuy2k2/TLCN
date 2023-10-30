@@ -55,8 +55,8 @@ ob_end_flush();
                                             <th class="product-cost">THÀNH TIỀN</th>
                                             <th class="product-address">ĐỊA CHỈ</th>
                                             <th class="product-phone">SỐ ĐIỆN THOẠI</th>
-                                            <th class="product-checkout" style="width:12%">THANH TOÁN</th>
-                                            <th class="product-status" style="width:5%">TÌNH TRẠNG</th>
+                                            <th class="product-checkout" style="width:13%">THANH TOÁN</th>
+                                            <th class="product-status" style="width:13%">TÌNH TRẠNG</th>
                                             <th class="product-date-create" style="width:3%">NGÀY ĐẶT HÀNG</th>
                                             <th class="product-action" style="width:3%">HÀNH ĐỘNG</th>
                                         </tr>
@@ -86,7 +86,7 @@ ob_end_flush();
                                                     <div class="product-thumbnail-item">
                                                         <img src="img/<?php echo $orderDetail['product_image']; ?>" alt="<?php echo $orderDetail['product_name']; ?>">
                                                         <div class="product-thumbnail-info">
-                                                            <h4><a href="detail.php?id=<?php echo $orderDetail['product_id']; ?>&type_id=<?php echo $orderDetail['type_id']; ?>"><?php echo $orderDetail['product_name']; ?></a></h4>
+                                                            <h5><a href="detail.php?id=<?php echo $orderDetail['product_id']; ?>&type_id=<?php echo $orderDetail['type_id']; ?>"><?php echo $orderDetail['product_name']; ?></a></h5>
                                                             <h5><?php echo number_format($orderDetail['discount_price'], 0, ',', '.'); ?>đ</h5>
                                                             <?php $totalPrice = $orderDetail['discount_price'] * $orderDetail['product_quantity']; ?>
                                                             <h5><p>Số lượng: x<?php echo $orderDetail['product_quantity']; ?></p></h5>

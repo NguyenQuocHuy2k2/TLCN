@@ -65,26 +65,26 @@
                                                                 </td>
 
                                                                 <td class="product-name" style="max-width: 440px;">
-                                                                    <a href="detail.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $value['type_id'] ?>"><?php echo $value['name'] ?></a>
+                                                                    <a href="detail.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $value['type_id'] ?>"><strong><?php echo $value['name'] ?></strong></a>
                                                                 </td>
 
                                                                 <td class="product-price">
-                                                                    <span class="amount"><?php echo number_format($value['discount_price']) ?>VND</span>
+                                                                    <span class="amount"><strong><?php echo number_format($value['discount_price']) ?>VND</strong></span>
                                                                 </td>
 
                                                                 <td class="product-quantity">
                                                                     <div class="quantity buttons_added">
                                                                         <!--     <input type="button" class="minus" value="-"> -->
                                                                         <a href="subtractqty.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $_GET['type_id'] ?>"><input type="button" class="minus" value="-"></a>
-                                                                        <input type="text" size="1" class="input-text qty text" title="Qty" value="<?php echo $qty ?>">
+                                                                        <strong><input style="border-color:#000;border-radius:4px" type="text" size="1" class="input-text qty text" title="Qty" value="<?php echo $qty ?>"></strong>
                                                                         <a href="addqty.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $_GET['type_id'] ?>"><input type="button" class="plus" value="+"></a>
                                                                         <!--    <input type="button" class="plus" value="+"> -->
                                                                     </div>
                                                                 </td>
 
                                                                 <td class="product-subtotal">
-                                                                    <span class="amount"><?php echo number_format($value['discount_price'] * $qty);
-                                                                    $total += $value['discount_price'] * $qty; ?>VND</span>
+                                                                    <span class="amount"><strong><?php echo number_format($value['discount_price'] * $qty);
+                                                                    $total += $value['discount_price'] * $qty; ?>VND</strong></span>
                                                                 </td>
                                                             </tr>
 
@@ -114,13 +114,13 @@
                                             </td>
 
                                         </tr>
+                                        
                                     <?php endif ?>
-
+                                    
                                 </table>
-                            </form>
-                            <div class="cart-collaterals">
+                                <div class="cart-collaterals">
                                 <div class="cart_totals col-lg-offset-4">
-                                    <h2>Tạm tính</h2>
+                                    
                                     <table cellspacing="0">
                                         <tbody>
                                             <tr class="order-total">
@@ -133,6 +133,8 @@
                                 </div>
 
                             </div>
+                            </form>
+
                             <hr size="5px" align="center" color=#e6e9ee />
                         </div>
                         <div class="col-md-12">

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$total_cost = $_SESSION['total_cost'];
 require "config.php";
 require "models/db.php";
 require "models/order.php";
@@ -24,15 +25,14 @@ if (isset($_POST['submit'])) {
     }
     $ids = $_GET['ids'];
     $ids_array = explode(',', $ids); 
-    $total_cost = 0; 
+    $coupon_amount = 0;
+    $coupon_amount = $_SESSION['checkout']['coupon_amount'];
     foreach ($ids_array as $id) :
         $getProductById = $product->getProductById($id);
         foreach ($getProductById as $value) :
             $price = $value['discount_price'];
         endforeach;
-        $quantity = $_SESSION['cart'][$id]; 
-        $total = $price * $quantity;
-        $total_cost += $total;
+
     endforeach;
     $order_id = $order->addOrder($user_id, $address, $phone, $total_cost, $note, $checkout);
     foreach ($ids_array as $id) :
