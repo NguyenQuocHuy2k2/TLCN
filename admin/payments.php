@@ -72,8 +72,6 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
                     </thead>
                     <tbody>
                         <?php
-                        $getAllOrderDetail = $orderdetail->getAllOrderDetails();
-                        $getAllOrdersDESC = $order->getAllOrdersDESC();
                         $getAllPayment = $payment->getAllPayments();
                         foreach ($getAllPayment as $value) :
                         ?>

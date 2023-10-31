@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th10 30, 2023 lúc 06:32 PM
+-- Thời gian đã tạo: Th10 31, 2023 lúc 03:52 PM
 -- Phiên bản máy phục vụ: 8.0.31
 -- Phiên bản PHP: 8.0.26
 
@@ -40,18 +40,20 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `coupon_expired` date NOT NULL,
   PRIMARY KEY (`coupon_id`,`coupon_code`),
   UNIQUE KEY `coupon_code` (`coupon_code`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Đang đổ dữ liệu cho bảng `coupons`
 --
 
 INSERT INTO `coupons` (`coupon_id`, `coupon_code`, `coupon_type`, `coupon_amount`, `min_order`, `coupon_quantity`, `coupon_used`, `coupon_remain`, `coupon_expired`) VALUES
-(1, 'GIAMGIA50K', 0, 50000, 500000, 30, 0, 30, '2023-11-02'),
-(2, 'GIAMGIA10%', 1, 20, 300000, 20, 5, 15, '2023-11-02'),
-(3, 'GIAMGIA100K', 0, 50000, 1000000, 30, 5, 2, '2023-11-10'),
-(4, 'GIAMGIA150K', 0, 150000, 500000, 30, 5, 1, '2023-11-09'),
-(5, '', 0, 0, 0, 0, 0, 0, '0000-00-00');
+(1, 'GIAMGIA50K', 0, 50000, 50000, 30, 0, 0, '2023-11-02'),
+(2, 'GIAMGIA10%', 1, 10, 300000, 30, 6, -2, '2023-11-02'),
+(3, 'GIAMGIA100K', 0, 100000, 1000000, 30, 5, 25, '2023-11-10'),
+(4, 'GIAMGIA150K', 0, 150000, 500000, 30, 9, 21, '2023-11-09'),
+(5, '', 0, 0, 0, 123125, 4, 123121, '2114-12-31'),
+(6, 'GIAMGIATEST', 0, 120000, 1000000, 12, 0, 0, '2023-12-01'),
+(7, 'GIAMGIA30K', 0, 30000, 120000, 9, 2, 7, '2023-12-24');
 
 -- --------------------------------------------------------
 
@@ -113,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `checkout` int NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `orders`
@@ -203,7 +205,16 @@ INSERT INTO `orders` (`order_id`, `user_id`, `address`, `phone`, `status`, `coup
 (232, 1, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 0, 1155000, '', 1, '2023-10-30 10:22:39'),
 (233, 1, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 6, 0, 990000, '', 0, '2023-10-30 10:32:50'),
 (234, 1, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 0, 1155000, '', 1, '2023-10-30 10:39:31'),
-(235, 1, '566/72/63R Nguyễn Thái Sơn, P.5, Quận Gò Vấp', '0935540795', 6, 20, 1320000, '', 0, '2023-10-30 14:31:03');
+(235, 1, '566/72/63R Nguyễn Thái Sơn, P.5, Quận Gò Vấp', '0935540795', 6, 20, 1320000, '', 0, '2023-10-30 14:31:03'),
+(246, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 0, 510000, '', 1, '2023-10-31 05:32:29'),
+(247, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 150000, 450000, '', 1, '2023-10-31 06:47:56'),
+(248, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 150000, 450000, '', 1, '2023-10-31 06:50:42'),
+(249, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 10, 540000, '', 1, '2023-10-31 06:53:08'),
+(250, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 0, 70000, '', 1, '2023-10-31 06:54:47'),
+(251, 1, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 2000000, 10170000, '', 0, '2023-10-31 09:06:06'),
+(252, 14, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 6, 150000, 620000, '', 0, '2023-10-31 11:08:06'),
+(253, 1, '285/6/8 Phạm Văn Chiêu, P.14, Quận Gò Vấp', '0935540795', 0, 0, 595000, '', 1, '2023-10-31 12:56:30'),
+(254, 1, '566/72/63R Nguyễn Thái Sơn, P.5, Quận Gò Vấp', '0935540795', 0, 150000, 450000, '', 1, '2023-10-31 14:16:54');
 
 -- --------------------------------------------------------
 
@@ -223,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `product_image` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `orderdetail_id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`orderdetail_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=207 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order_details`
@@ -370,7 +381,22 @@ INSERT INTO `order_details` (`order_id`, `product_name`, `discount_price`, `prod
 (242, 'Dâu tây đỏ ngọt (kg)', 100000, 1, 100000, 18, 1, 'dautay.png', 203),
 (243, 'Hồng đỏ Nam Mỹ (kg)', 165000, 1, 165000, 11, 1, 'hongdomy.png', 204),
 (244, 'Hồng đỏ Nam Mỹ (kg)', 165000, 4, 660000, 11, 1, 'hongdomy.png', 205),
-(245, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 206);
+(245, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 206),
+(246, 'Hồng đỏ Nam Mỹ (kg)', 165000, 4, 660000, 11, 1, 'hongdomy.png', 207),
+(247, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 208),
+(248, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 209),
+(249, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 210),
+(250, 'Cải thìa Triều Tiên (kg)', 70000, 1, 70000, 53, 3, 'caithia.png', 211),
+(251, 'Kiwi ngọt Brazil (kg)', 190000, 3, 570000, 57, 1, 'kiwi.png', 212),
+(251, 'Dâu tây đỏ ngọt (kg)', 100000, 3, 300000, 18, 1, 'dautay.png', 213),
+(251, 'Bánh kem Matcha', 600000, 5, 3000000, 22, 2, 'banhkemmatcha.jpg', 214),
+(251, 'Bánh kem dâu Ý', 1200000, 6, 7200000, 5, 2, 'banhkemdau.jpg', 215),
+(251, 'Bánh kem Táo Hàn Quốc', 550000, 2, 1100000, 17, 2, 'banhkemtao.jpg', 216),
+(252, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 217),
+(252, 'Vải thiều loại to (kg)', 85000, 2, 170000, 21, 1, 'vaithieuloaito.png', 218),
+(253, 'Dâu tây đỏ ngọt (kg)', 100000, 1, 100000, 18, 1, 'dautay.png', 219),
+(253, 'Hồng đỏ Nam Mỹ (kg)', 165000, 3, 495000, 11, 1, 'hongdomy.png', 220),
+(254, 'Chanh dây Nga tươi (kg)', 120000, 5, 600000, 16, 1, 'chanhday.png', 221);
 
 -- --------------------------------------------------------
 
@@ -398,7 +424,9 @@ INSERT INTO `payments` (`order_id`, `total_cost`, `bankcode`, `content`, `card_t
 (227, 330000, 'VNPAY', '227', 'QRCODE', 'Thanh toán thất bại'),
 (233, 990000, 'VNPAY', '233', 'QRCODE', 'Thanh toán thất bại'),
 (235, 1320000, 'VNPAY', '235', 'QRCODE', 'Thanh toán thất bại'),
-(241, 212000, 'NCB', '241', 'ATM', 'Thanh toán thành công');
+(241, 212000, 'NCB', '241', 'ATM', 'Thanh toán thành công'),
+(251, 10170000, 'NCB', '251', 'ATM', 'Thanh toán thành công'),
+(252, 620000, 'VNPAY', '252', 'QRCODE', 'Thanh toán thất bại');
 
 -- --------------------------------------------------------
 

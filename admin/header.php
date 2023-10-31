@@ -294,7 +294,7 @@ $payment = new Payment;
                             <a href="sales.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/sales.php' || $_SERVER['PHP_SELF'] == '../admin/addSale.php') {
                                                                     echo 'active';
                                                                 } ?>">
-                                <i class="nav-icon fas fa-tags"></i>
+                                <i class="nav-icon fas fa-list"></i>
                                 <p>
                                     Sales
                                     <span class="right badge badge-danger">New</span>
@@ -344,7 +344,18 @@ $payment = new Payment;
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
-                        </li>                                           
+                        </li>
+                        <li class="nav-item">
+                            <a href="coupons.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '../admin/coupons.php') {
+                                                                    echo 'active';
+                                                                } ?>">
+                                <i class="nav-icon fas fa-percent"></i>
+                                <p>
+                                    Coupons
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>                                 
                         <li class="nav-item">
                             <a href="logout.php" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>

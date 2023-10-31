@@ -36,7 +36,7 @@
               <p>Products</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="fas fa-shopping-cart"></i>
             </div>
             <a href="products.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -61,14 +61,14 @@
           <!-- small box -->
           <div class="small-box bg-pink">
             <div class="inner">
-              <h3><?php echo count($sale->getAllSales()) ?></h3>
+              <h3><?php echo count($coupon->getAllCoupon()) ?></h3>
 
-              <p>Sales</p>
+              <p>Coupons</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="fas fa-tags"></i>
             </div>
-            <a href="sales.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="couopns.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
 
         </div>
@@ -110,7 +110,7 @@
             <div class="inner">
               <h3><?php echo count($role->getAllRole()) ?></h3>
 
-              <p>Role</p>
+              <p>Roles</p>
             </div>
             <div class="icon">
               <i class="ion ion-key"></i>

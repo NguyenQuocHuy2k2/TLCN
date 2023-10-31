@@ -65,16 +65,16 @@ if (isset($_GET['status'])) {
           <thead>
             <tr>
               <th style="width: 1%">
-                ID
+                Sell_id
               </th>
               <th style="width: 25%">
-                Sell Number
+                Sell number
               </th>
               <th style="width: 25%">
-                Import Quantity
+                Import quantity
               </th>
               <th style="width: 35%">
-                Import Date
+                Import date
               </th>
               <th style="width: 14%">
                 Action

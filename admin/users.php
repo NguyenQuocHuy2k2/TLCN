@@ -65,10 +65,10 @@ if (isset($_GET['status'])) {
           <thead>
             <tr>
               <th style="width: 5%">
-                User_ID
+                User_id
               </th>
               <th style="width: 10%">
-                image
+                Image
               </th>
               <th style="width: 14%">
                 First name
@@ -86,7 +86,7 @@ if (isset($_GET['status'])) {
                 Password
               </th>
               <th style="width: 3%">
-                Role_ID
+                Role_id
               </th>
               <th style="width: 20%">
               </th>
@@ -105,7 +105,7 @@ if (isset($_GET['status'])) {
                 <td><?php echo $value['phone'] ?></td>
                 <td><?php echo $value['username'] ?></td>
                 <td><?php echo $value['password'] ?></td>
-                <td><?php echo $value['role_id'] ?></td>
+                <td style="text-align:center"><?php echo $value['role_id'] ?></td>
 
                 <td class="project-actions text-right">
                   <a class="btn btn-info btn-sm" href="editUser.php?user_id=<?php echo $value['user_id']; ?>">

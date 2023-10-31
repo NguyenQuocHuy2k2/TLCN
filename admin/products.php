@@ -66,7 +66,7 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
           <thead>
             <tr>
               <th style="width: 1%">
-                ID
+                Product_id
               </th>
               <th style="width: 15%">
                 Name
@@ -74,7 +74,7 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
               <th style="width: 5%">
                 Image
               </th>
-              <th style="width: 15%">
+              <th style="width: 25%">
                 Description
               </th>
               <th style="width: 8%">
@@ -95,7 +95,7 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
               <th style="width: 8%">
                 Created_at
               </th>
-              <th style="width: 10%" class="text-center">
+              <th style="width: 5%" class="text-center">
                 Action
               </th>
             </tr>
@@ -119,13 +119,13 @@ echo '<script>window.history.pushState({}, document.title, "/" + "/admin/product
             foreach ($get10ProductsDESCs as $value) :
             ?>
               <tr>
-                <td><?php echo $value['id'] ?></td>
+                <td style="text-align:center"><?php echo $value['id'] ?></td>
                 <td><?php echo $value['name'] ?></td>
                 <td><img style="width:50px" src="../img/<?php echo $value['pro_image'] ?>" alt=""></td>
                 <td class="project_progress">
                   <?php
-                  if (strlen($value['description']) > 60) : ?>
-                    <?php echo substr($value['description'], 0, 60) ?><a style="color: black;" href="detailProducts.php?id=<?php echo $value['id'] ?>">...</a>
+                  if (strlen($value['description']) > 120) : ?>
+                    <?php echo substr($value['description'], 0, 120) ?><a style="color: black;" href="detailProducts.php?id=<?php echo $value['id'] ?>">...</a>
                     <?php else: echo $value['description'] ?>
                   <?php endif ?>
 

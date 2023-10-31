@@ -57,10 +57,10 @@ if(isset($_GET['status'])){
           <thead>
             <tr>
               <th style="width: 43%">
-                Manu_ID
+                Manu_id
               </th>
               <th style="width: 30%">
-                Manu_Name
+                Name
               </th>
               <th style="width: 20%">
               
