@@ -75,7 +75,7 @@ if (isset($_SESSION['user'])) {
 									<div class="product-body">
 										<p class="product-category"></p>
 										<h3 class="product-name"><a href="detail.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $value['type_id'] ?>"><?php echo $value['name'] ?></a></h3>
-										<h4 class="product-price"><?php echo number_format($value['price']) ?></h4>
+										<h4 class="product-price"><?php echo number_format($value['discount_price']) ?></h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>

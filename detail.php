@@ -46,7 +46,7 @@
 
                                             <h2 class="product-name"><?php echo $value['name'] ?></h2>
                                             <div class="product-inner-price">
-                                                <ins><?php echo number_format($value['price']) ?>VND</ins>
+                                                <ins><?php echo number_format($value['discount_price']) ?>VND</ins>
                                             </div>
                                           
                                             <form action="addcart1.php?id=<?php echo $_GET['id'] ?>&type_id=<?php echo $_GET['type_id'] ?>" class="cart" method="post">
@@ -118,7 +118,7 @@
                                                         <div class="product-body">
                                                             <p class="product-category"></p>
                                                             <h3 class="product-name"><a href="detail.php?id=<?php echo $value['id'] ?>&type_id=<?php echo $value['type_id'] ?>"><?php echo $value['name'] ?></a></h3>
-                                                            <h4 class="product-price"><?php echo number_format($value['price']) ?>VND</h4>
+                                                            <h4 class="product-price"><?php echo number_format($value['discount_price']) ?>VND</h4>
                                                             <div class="product-rating">
                                                                 <i class="fa fa-star"></i>
                                                                 <i class="fa fa-star"></i>

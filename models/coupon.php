@@ -54,14 +54,14 @@ class Coupon extends Db{
         return $item;
     }
 
-    public function addCoupon($coupon_code, $coupon_type, $coupon_discount, $min_order, $coupon_quantity, $coupon_expired) {
-        $sql = self::$connection->prepare("INSERT INTO coupons(coupon_code, coupon_type, coupon_amount, min_order, coupon_quantity, coupon_expired) VALUES(?, ?, ?, ?, ?, ?)");
+    public function addCoupon($coupon_code, $coupon_type, $coupon_discount, $min_order, $coupon_quantity, $coupon_remain, $coupon_expired) {
+        $sql = self::$connection->prepare("INSERT INTO coupons(coupon_code, coupon_type, coupon_amount, min_order, coupon_quantity, coupon_remain,coupon_expired) VALUES(?, ?, ?, ?, ?, ?,?)");
 
         if (!$sql) {
             die('Câu truy vấn SQL không hợp lệ: ' . self::$connection->error);
         }
 
-        $sql->bind_param("sidiis", $coupon_code, $coupon_type, $coupon_discount, $min_order, $coupon_quantity, $coupon_expired);
+        $sql->bind_param("sidiiis", $coupon_code, $coupon_type, $coupon_discount, $min_order, $coupon_quantity, $coupon_remain, $coupon_expired);
 
         if (!$sql->execute()) {
             die('Lỗi khi thực hiện truy vấn: ' . $sql->error);

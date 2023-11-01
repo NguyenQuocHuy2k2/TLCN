@@ -1,11 +1,24 @@
 <?php
 session_start();
+
+$total_cost = $_SESSION['total_cost'];
+$coupon_discount = $_SESSION['couponAmount'];
+$coupon_code = $_SESSION['coupon_code'];
+$coupon_quantity = $_SESSION['coupon_quantity'];
+$coupon_used = $_SESSION['coupon_used'];
+$coupon_remain = $_SESSION['coupon_remain'];
+
+var_dump($total_cost, $coupon_discount, $coupon_code, $coupon_quantity, $coupon_used, $coupon_remain);
+
 require "config.php";
 require "models/db.php";
 require "models/order.php";
 require "models/orderdetail.php";
 require "models/user.php";
 require "models/product.php";
+require "models/coupon.php";
+
+$coupon = new Coupon;
 
 $order = new Order;
 $user = new User;
@@ -25,7 +38,6 @@ if (isset($_POST['submit'])) {
     $ids = $_GET['ids'];
     $ids_array = explode(',', $ids);
     $order_ids = $_GET['order_id'];
-    $total_cost = 0;
     $getOrderDetailById = $orderdetail->getAllOrderDetailsByOrderId($order_ids);
     foreach ($ids_array as $id) :
         $getProductById = $product->getProductById($id);
@@ -38,11 +50,12 @@ if (isset($_POST['submit'])) {
         
         foreach ($getOrderDetailById as $orderdetails):
             $quantity = $orderdetails['product_quantity'];
-        endforeach;    
-        $total = $price * $quantity;
-        $total_cost += $total;
+        endforeach;   
     endforeach;
-    $order_id = $order->addOrder($user_id, $address, $phone, $total_cost, $note, $checkout);
+    $coupon_used = $coupon_used + 1;
+    $coupon_remain = $coupon_quantity - $coupon_used;
+    $coupon->updateCoupon($coupon_code,$coupon_quantity,$coupon_used,$coupon_remain);
+    $order_id = $order->addOrder($user_id, $address, $phone, $coupon_discount, $total_cost, $note, $checkout);
     foreach ($ids_array as $id) :
         $getProductById = $product->getProductById($id); 
         foreach ($getProductById as $value) :

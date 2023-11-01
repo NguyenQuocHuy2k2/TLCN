@@ -9,11 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['couponCode'] = '';
 }
 
-// Xử lý mã giảm giá thành công
-// ...
-// Cuối cùng, thêm mã JavaScript để tải lại trang
-echo '<script>window.location.reload();</script>';
-
 ?>
 
 

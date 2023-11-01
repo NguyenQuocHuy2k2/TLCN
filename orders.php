@@ -49,14 +49,14 @@ ob_end_flush();
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
-                                            <th class="order-id">MÃ ĐƠN HÀNG</th>
-                                            <th class="product-thumbnail">SẢN PHẨM</th>
+                                            <th class="order-id" style="width:5%">MÃ ĐƠN HÀNG</th>
+                                            <!-- <th class="product-thumbnail" style="width:13%">SẢN PHẨM</th> -->
                                             <th class="product-cost">THÀNH TIỀN</th>
                                             <th class="product-address">ĐỊA CHỈ</th>
                                             <th class="product-phone">SỐ ĐIỆN THOẠI</th>
-                                            <th class="product-checkout" style="width:13%">THANH TOÁN</th>
-                                            <th class="product-status" style="width:13%">TÌNH TRẠNG</th>
-                                            <th class="product-date-create" style="width:3%">NGÀY ĐẶT HÀNG</th>
+                                            <th class="product-checkout">THANH TOÁN</th>
+                                            <th class="product-status">TÌNH TRẠNG</th>
+                                            <th class="product-date-create">NGÀY ĐẶT HÀNG</th>
                                             <th class="product-action" style="width:3%">HÀNH ĐỘNG</th>
                                         </tr>
                                     </thead>
@@ -67,111 +67,122 @@ ob_end_flush();
                                             $user_id = $value['user_id'];
                                         }
                                         $getOrderByUserId = $order->getOrderByUserID($user_id);
-                                        $perPage = 3;
+                                        $perPage = 5;
                                         // Lấy số trang trên thanh địa chỉ
                                         $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                         // Tính tổng số dòng, ví dụ kết quả là 18
                                         $total = count($getOrderByUserId);
                                         // lấy đường dẫn đến file hiện hành
                                         $url = $_SERVER['PHP_SELF'] . "?user_id=" . $user_id;
-                                        $get3OrderByUserID = $order->get3OrderByUserID($user_id,$page,$perPage);
+                                        $get3OrderByUserID = $order->get3OrderByUserID($user_id, $page, $perPage);
                                         foreach ($get3OrderByUserID as $orderInfo) {
                                             $orderDetails = $orderdetail->getAllOrderDetailsByOrderId($orderInfo['order_id']);
-                                        ?>
-                                        <tr>
-                                            <td class="order-id"><strong><?php echo $orderInfo['order_id']; ?></strong></td>
-                                            <td class="product-thumbnail">
-                                                <?php foreach ($orderDetails as $orderDetail) : ?>
-                                                    <div class="product-thumbnail-item">
-                                                        <img src="img/<?php echo $orderDetail['product_image']; ?>" alt="<?php echo $orderDetail['product_name']; ?>">
-                                                        <div class="product-thumbnail-info">
-                                                            <h5><a href="detail.php?id=<?php echo $orderDetail['product_id']; ?>&type_id=<?php echo $orderDetail['type_id']; ?>"><?php echo $orderDetail['product_name']; ?></a></h5>
-                                                            <h5><?php echo number_format($orderDetail['discount_price'], 0, ',', '.'); ?>đ</h5>
-                                                            <?php $totalPrice = $orderDetail['discount_price'] * $orderDetail['product_quantity']; ?>
-                                                            <h5><p>Số lượng: x<?php echo $orderDetail['product_quantity']; ?></p></h5>
-                                                            <h5><p>Tổng: <?php echo number_format($totalPrice, 0, ',', '.'); ?>đ</h5>
-                                                            
-                                                            <hr style="border-top:1px solid gray;">
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                                <h5><p>Giảm giá: <?php 
-                                                            if($orderInfo['coupon_discount'] >100){
-                                                                echo number_format(-$orderInfo['coupon_discount'], 0, ',', '.'); 
-                                                            }else{
-                                                                echo number_format(-($orderInfo['coupon_discount']*($orderInfo['total']/(1-($orderInfo['coupon_discount']/100))))/100, 0, ',', '.');
+                                            ?>
+                                            <tr>
+                                                <td class="order-id"><strong>
+                                                        <?php echo $orderInfo['order_id']; ?>
+                                                    </strong></td>
+
+                                                <td class="product-cost"><strong>
+                                                        <?php echo number_format($orderInfo['total'], 0, ',', '.'); ?>đ</td>
+                                                </strong>
+                                                <td class="product-address"><strong>
+                                                        <?php echo $orderInfo['address']; ?>
+                                                </td></strong>
+                                                <td class="product-phone"><strong>
+                                                        <?php echo $orderInfo['phone']; ?>
+                                                </td></strong>
+                                                <td class="product-checkout"><strong>
+                                                        <?php if ($orderInfo['checkout'] == 0) {
+                                                            echo 'Chuyển khoản ngân hàng';
+                                                        } else {
+                                                            echo 'Thanh toán khi nhận hàng';
+                                                        } ?>
+                                                </td></strong>
+                                                <td class="product-status">
+                                                    <strong>
+                                                        <?php
+                                                        $statusInfo = $status->getAllStatus();
+                                                        foreach ($statusInfo as $values1) {
+                                                            if ($values1['status'] == $orderInfo['status']) {
+                                                                echo $values1['status_name'];
                                                             }
-                                                ?>đ</h5>
-                                            </td>
-                                            <td class="product-cost"><strong><?php echo number_format($orderInfo['total'], 0, ',', '.'); ?>đ</td></strong>
-                                            <td class="product-address"><strong><?php echo $orderInfo['address']; ?></td></strong>
-                                            <td class="product-phone"><strong><?php echo $orderInfo['phone']; ?></td></strong>
-                                            <td class="product-checkout"><strong><?php if($orderInfo['checkout'] == 0) { echo 'Chuyển khoản ngân hàng';} else { echo 'Thanh toán khi nhận hàng';} ?></td></strong>
-                                            <td class="product-status">
-                                                <strong><?php
-                                                $statusInfo = $status->getAllStatus();
-                                                foreach($statusInfo as $values1){
-                                                    if($values1['status'] == $orderInfo['status']){
-                                                        echo $values1['status_name'];
-                                                    }
-                                                }           
-                                                ?></strong>
-                                            </td>
-                                            <td class="product-date-create">
-                                                <strong><?php echo date_format(date_create($orderInfo['date_create']), "d/m/Y H:i:s"); ?></strong>
-                                            </td>
-                                            <td class="product-action">
-                                                <?php if ($orderInfo['status'] == 4) : ?>
-                                                    <button class="btn btn-received">
-                                                        <a style="text-decoration: none; color:#fff;" href="./received.php?order_id=<?php echo $orderInfo['order_id']; ?>">
-                                                            <i class="fa fa-check"></i> ĐÃ NHẬN HÀNG
+                                                        }
+                                                        ?>
+                                                    </strong>
+                                                </td>
+                                                <td class="product-date-create">
+                                                    <strong>
+                                                        <?php echo date_format(date_create($orderInfo['date_create']), "d/m/Y H:i:s"); ?>
+                                                    </strong>
+                                                </td>
+                                                <td class="product-action">
+
+                                                    <button class="btn btn-info" style="margin-bottom:5px;background-color:#FE9705;border-color:#FE9705">
+                                                        <a style="text-decoration: none; color:#fff;"
+                                                            href="./orderdetails.php?order_id=<?php echo $orderInfo['order_id']; ?>">
+                                                            <i class="fa fa-pencil"></i> XEM CHI TIẾT
                                                         </a>
                                                     </button>
-                                                <?php endif; ?>
-                                                <?php if ($orderInfo['status'] == 1 || $orderInfo['status'] == 5 ||$orderInfo['status'] == 6) : ?>
-                                                    <!-- Thêm nút đặt hàng lại cho đơn đã nhận hàng -->
-                                                    <?php
+
+                                                    <?php if ($orderInfo['status'] == 4): ?>
+                                                        <button class="btn btn-received">
+                                                            <a style="text-decoration: none; color:#fff;"
+                                                                href="./received.php?order_id=<?php echo $orderInfo['order_id']; ?>">
+                                                                <i class="fa fa-check"></i> ĐÃ NHẬN HÀNG
+                                                            </a>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                    <?php if ($orderInfo['status'] == 1 || $orderInfo['status'] == 5 || $orderInfo['status'] == 6): ?>
+                                                        <!-- Thêm nút đặt hàng lại cho đơn đã nhận hàng -->
+                                                        <?php
                                                         $orderDetails = $orderdetail->getAllOrderDetailsByOrderId($orderInfo['order_id']);
                                                         $productIds = array();
-                                                        
+
                                                         foreach ($orderDetails as $orderDetail) {
                                                             $productIds[] = $orderDetail['product_id'];
                                                         }
-                                                        
+
                                                         // Tạo URL với danh sách các ID sản phẩm (ids)
                                                         $ids = implode(',', $productIds);
+                                                        $type_id = $protype->getAllProtype();
+                                                        foreach ($type_id as $value) {
+                                                            $type_id = $value['type_id'];
+                                                        }
                                                         ?>
-                                                        <button class="btn btn-reorder" style="background-color: #eae31e">
-                                                            <a style="text-decoration: none;color:#fff;" href="./reorder.php?ids=<?php echo $ids; ?>&order_id=<?php echo $orderInfo['order_id']; ?>">
+                                                        <button class="btn btn-reorder" style="background-color: #80bb35">
+                                                            <a style="text-decoration: none;color:#fff;"
+                                                                href="./addcarts.php?id=<?php echo $ids; ?>&type_id=<?php echo $type_id ?>">
                                                                 <i class="fa fa-refresh"></i> ĐẶT HÀNG LẠI
                                                             </a>
                                                         </button>
-                                                <?php endif; ?>
-                                                <?php if ($orderInfo['status'] == 0) : ?>
-                                                    <button class="btn btn-cancel" style="background-color:red;">
-                                                        <a style="text-decoration: none;color:#fff;" href="./canceled.php?order_id=<?php echo $orderInfo['order_id']; ?>">
-                                                            <i class="fa fa-trash-o"></i> HỦY ĐƠN HÀNG
-                                                        </a>
-                                                    </button>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tr>
+                                                    <?php endif; ?>
+                                                    <?php if ($orderInfo['status'] == 0): ?>
+                                                        <button class="btn btn-reorder" style="background-color:red;">
+                                                            <a style="text-decoration: none;color:#fff;"
+                                                                href="./canceled.php?order_id=<?php echo $orderInfo['order_id']; ?>">
+                                                                <i class="fa fa-trash-o"></i> HỦY ĐƠN HÀNG
+                                                            </a>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
                                         <?php } ?>
                                     </tbody>
                                 </table>
                             </form>
                             <div class="store-filter clearfix">
-                                            <!-- <span class="store-qty">Showing 20-100 products</span> -->
-                                            <ul class="store-pagination">
-                                                <?php echo $order->paginate($url, $total, $perPage, $page); ?>
-                                            </ul>
+                                <!-- <span class="store-qty">Showing 20-100 products</span> -->
+                                <ul class="store-pagination">
+                                    <?php echo $order->paginate($url, $total, $perPage, $page); ?>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 </body>
 <?php include "footer.php" ?>

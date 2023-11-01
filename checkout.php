@@ -23,13 +23,6 @@ $_SESSION['coupon_code'] = $coupon_name;
 $_SESSION['coupon_quantity'] = $coupon_quantity;
 $_SESSION['coupon_used'] = $coupon_used;
 $_SESSION['coupon_remain'] = $coupon_remain;
-$test = $_SESSION['coupon_remain'];
-$test2 = $_SESSION['coupon_code'];
-var_dump($test);
-var_dump($test2);
-var_dump($coupon_quantity);
-var_dump($coupon_used);
-var_dump($coupon_remain);
 unset($_SESSION['couponCode']);
 ?>
 <!DOCTYPE html>
@@ -161,6 +154,7 @@ unset($_SESSION['couponCode']);
 										endforeach;
 									endif
 									?>
+									
 									<div class="order-col">
 										<div>
 											<strong>Tiền hàng:</strong>
@@ -206,7 +200,7 @@ unset($_SESSION['couponCode']);
 											'temp_cost' => $temp_cost
 										);
 									}
-									
+
 									echo '<script>';
 									echo 'var couponData = ' . json_encode($coupon_data) . ';';
 									echo '</script>';
@@ -232,19 +226,30 @@ unset($_SESSION['couponCode']);
 																	url: 'process.php',
 																	data: { couponCode: couponCode },
 																});
-																location.reload();
-															} else if (couponData[i].temp_cost < couponData[i].min_order) {
-																couponResult.innerHTML = 'Giá trị đơn hàng chưa thỏa điều kiện';
+																setTimeout(function () {
+																	location.reload();
+																}, 1000);
+																couponResult.innerHTML = 'Mã giảm giá "' + couponCode + '" được áp dụng thành công.';
+																couponResult.style.cssText = 'color: green; font-family: Montserrat; font-weight: 500; margin-top:12px;margin-bottom:24px;';
+																break;
+															} else {
+																couponResult.innerHTML = 'Giá trị đơn hàng chưa đáp ứng, tối thiểu là: <span style="font-weight: 700;">' + couponData[i].min_order.toLocaleString('vi-VN') + 'đ</span>';
+																couponResult.style.cssText = 'color: red; font-family: Montserrat; font-weight: 500; margin-top:12px;margin-bottom:24px;';
+																break;
 															}
-														} else if (couponData[i].coupon_remain <= 0) {
-															couponResult.innerHTML = 'Số lượng mã giảm giá này đã hết';
+														} else {
+															couponResult.innerHTML = 'Số lượng mã giảm giá này đã hết.';
+															couponResult.style.cssText = 'color: red; font-family: Montserrat; font-weight: 500; margin-top:12px;margin-bottom:24px;';
+															break;
 														}
 													} else {
-														couponResult.innerHTML = 'Mã giảm giá không hợp lệ';
+														couponResult.innerHTML = 'Mã giảm giá này không hợp lệ.';
+														couponResult.style.cssText = 'color: red; font-family: Montserrat; font-weight: 500; margin-top:12px;margin-bottom:24px;';
 													}
 												}
 											} else {
-												couponResult.innerHTML = 'Không được bỏ trống, vui lòng nhập mã giảm giá';
+												couponResult.innerHTML = 'Không được bỏ trống, vui lòng nhập mã giảm giá.';
+												couponResult.style.cssText = 'color: red; font-family: Montserrat; font-weight: 500; margin-top:12px;margin-bottom:24px;';
 											}
 										}
 									</script>
