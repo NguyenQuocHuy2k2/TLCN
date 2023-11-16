@@ -1,0 +1,32 @@
+/* Trong tệp CSS của bạn, chẳng hạn style.css */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 3px 3px 3px 3px;
+}
+
+.pagination li {
+    margin: 5px 5px 5px 5px;
+    display: inline-block;
+}
+
+.pagination a,
+.pagination span {
+    padding: 14px 20px 14px 20px;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #0000002a;
+    border-radius: 500px;
+}
+
+.pagination li.active a {
+    background-color: #FE9705;
+    color: #fff;
+}
+
+.pagination a:hover {
+    background-color: #FE9705;
+    color:#fff;
+}
